@@ -1,183 +1,328 @@
-const zhBtn = document.getElementById('btn-zh');
-const enBtn = document.getElementById('btn-en');
-const summaryGrid = document.getElementById('summary-grid');
-const sectionChips = document.getElementById('section-chips');
-const pagesContainer = document.getElementById('pages-container');
+/**
+ * script.js — Rendering logic for Lin Qi's academic homepage.
+ * Reads data from window.PROFILE (loaded via data.js).
+ * Supports CN/EN bilingual toggle, mobile menu, scroll spy,
+ * publication filter, and dynamic section rendering.
+ */
 
-let currentLang = 'zh_CN';
-let dataStore = null;
-let selectedSection = 'all';
+(function () {
+  'use strict';
 
-const labels = {
-  zh_CN: {
-    summary: '抓取概览',
-    columns: '栏目导航',
-    content: '栏目内容',
-    footer: '数据来源：东北大学教师主页（中/英文）',
-    pages: '页面数',
-    images: '图片数',
-    tables: '含表格页面',
-    sectionAll: '全部',
-    text: '文字',
-    table: '表格',
-    image: '图片',
-    source: '原文链接',
-    none: '暂无内容'
-  },
-  en: {
-    summary: 'Crawl Summary',
-    columns: 'Column Navigation',
-    content: 'Column Content',
-    footer: 'Data source: Northeastern University faculty homepage (CN/EN)',
-    pages: 'Pages',
-    images: 'Images',
-    tables: 'Pages With Tables',
-    sectionAll: 'All',
-    text: 'Text',
-    table: 'Table',
-    image: 'Image',
-    source: 'Source URL',
-    none: 'No content'
-  }
-};
+  const P = window.PROFILE;
+  let lang = localStorage.getItem('lang') || 'zh';   // 'zh' | 'en'
 
-function langKey() {
-  return currentLang === 'zh_CN' ? 'zh_CN' : 'en';
-}
+  /* ─── Helpers ─── */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const k = (key) => key + (lang === 'zh' ? '_zh' : '_en');
 
-function t(key) {
-  return labels[langKey()][key] || key;
-}
+  /* ─── Language switching ─── */
+  function setLang(l) {
+    lang = l;
+    localStorage.setItem('lang', l);
+    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
 
-function sectionTitle(raw) {
-  const map = {
-    index: { zh_CN: '首页', en: 'Home' },
-    zhym: { zh_CN: '科学/教学研究', en: 'Research/Teaching' },
-    yjgk: { zh_CN: '研究概况', en: 'Research Overview' },
-    zdylm: { zh_CN: '重点栏目', en: 'Featured Columns' },
-    zlcg: { zh_CN: '论文成果/专利', en: 'Publications/Patents' },
-    skxx: { zh_CN: '授课信息', en: 'Teaching Info' },
-    jxcg: { zh_CN: '教学成果', en: 'Teaching Achievements' },
-    img: { zh_CN: '教师风采', en: 'Gallery' },
-    yjfx: { zh_CN: '研究方向', en: 'Research Focus' },
-    more: { zh_CN: '更多', en: 'More' },
-    misc: { zh_CN: '主页', en: 'Main Page' }
-  };
-  return (map[raw] && map[raw][langKey()]) || raw;
-}
-
-function buildSummary() {
-  const pages = dataStore.pages.filter((item) => item.lang === currentLang);
-  const imageCount = new Set(pages.flatMap((item) => item.images || [])).size;
-  const tablePages = pages.filter((item) => (item.tables || []).length > 0).length;
-  summaryGrid.innerHTML = `
-    <article class="stat"><strong>${pages.length}</strong><span>${t('pages')}</span></article>
-    <article class="stat"><strong>${imageCount}</strong><span>${t('images')}</span></article>
-    <article class="stat"><strong>${tablePages}</strong><span>${t('tables')}</span></article>
-  `;
-}
-
-function buildChips() {
-  const pages = dataStore.pages.filter((item) => item.lang === currentLang);
-  const sections = [...new Set(pages.map((item) => item.section || 'misc'))];
-  const chipHtml = [
-    `<button class="chip ${selectedSection === 'all' ? 'active' : ''}" data-section="all">${t('sectionAll')}</button>`
-  ];
-
-  sections.forEach((section) => {
-    const activeClass = selectedSection === section ? 'active' : '';
-    chipHtml.push(`<button class="chip ${activeClass}" data-section="${section}">${sectionTitle(section)}</button>`);
-  });
-
-  sectionChips.innerHTML = chipHtml.join('');
-  sectionChips.querySelectorAll('button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      selectedSection = btn.getAttribute('data-section');
-      buildChips();
-      buildPages();
+    // Update all [data-zh] / [data-en] elements
+    $$('[data-zh]').forEach(el => {
+      el.textContent = el.getAttribute(l === 'zh' ? 'data-zh' : 'data-en');
     });
-  });
-}
 
-function renderTables(tables) {
-  if (!tables || tables.length === 0) return '';
-  return tables.map((table, idx) => {
-    const rowsHtml = table.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('');
-    return `<details><summary>${t('table')} ${idx + 1}</summary><table class="data-table"><tbody>${rowsHtml}</tbody></table></details>`;
-  }).join('');
-}
+    // Highlight active lang button
+    $$('.lang-btn').forEach(btn => {
+      const isActive = btn.dataset.lang === l;
+      btn.classList.toggle('bg-white/20', isActive);
+      btn.classList.toggle('bg-white/10', !isActive);
+    });
 
-function renderImages(images) {
-  if (!images || images.length === 0) return '';
-  const shown = images.slice(0, 8);
-  return `<div class="gallery">${shown.map((src) => {
-    const local = dataStore.imageMap[src] || src;
-    return `<a href="${src}" target="_blank" rel="noopener"><img src="${local}" alt="image" loading="lazy" /></a>`;
-  }).join('')}</div>`;
-}
-
-function buildPages() {
-  let pages = dataStore.pages.filter((item) => item.lang === currentLang);
-  if (selectedSection !== 'all') {
-    pages = pages.filter((item) => item.section === selectedSection);
+    // Re-render data-driven sections
+    renderSidebar();
+    renderHero();
+    renderBio();
+    renderEducation();
+    renderNews();
+    renderResearchAreas();
+    renderProjects();
+    renderPatents();
+    renderPublications();
+    renderTeaching();
+    renderRecruitment();
+    renderLab();
   }
 
-  if (pages.length === 0) {
-    pagesContainer.innerHTML = `<p>${t('none')}</p>`;
-    return;
+  /* ─── Sidebar info ─── */
+  function renderSidebar() {
+    $('#sidebar-name').textContent = P.personalInfo[k('name')];
+    $('#sidebar-title').textContent = P.personalInfo[k('title')];
+    $('#sidebar-dept').innerHTML = P.personalInfo[k('dept')].replace(/, /g, '<br/>').replace('，', '<br/>');
+    $('#sidebar-addr').textContent = lang === 'zh' ? '东北大学浑南校区 生科楼' : 'MBIE, NEU, Shenyang';
   }
 
-  pagesContainer.innerHTML = pages.map((page) => {
-    const text = (page.text || '').slice(0, 900);
-    return `
-      <article class="page-card">
-        <h3>${page.title || page.url}</h3>
-        <p class="source-line"><a href="${page.url}" target="_blank" rel="noopener">${t('source')}</a> · ${sectionTitle(page.section || 'misc')}</p>
-        <details open>
-          <summary>${t('text')}</summary>
-          <p>${text || t('none')}</p>
-        </details>
-        ${renderTables(page.tables || [])}
-        <details>
-          <summary>${t('image')} (${(page.images || []).length})</summary>
-          ${renderImages(page.images || [])}
-        </details>
-      </article>
-    `;
-  }).join('');
-}
+  /* ─── Hero ─── */
+  function renderHero() {
+    $('#hero-name').textContent = P.personalInfo[k('name')];
+    $('#hero-title').textContent = P.personalInfo[k('title')];
+    $('#hero-dept').textContent = P.personalInfo[k('dept')].replace('，', ' · ').replace(', ', ' · ');
+  }
 
-function syncStaticText() {
-  document.getElementById('summary-title').textContent = t('summary');
-  document.getElementById('columns-title').textContent = t('columns');
-  document.getElementById('content-title').textContent = t('content');
-  document.getElementById('footer-text').textContent = t('footer');
-}
+  /* ─── Bio ─── */
+  function renderBio() {
+    const paras = lang === 'zh' ? P.profile.zh : P.profile.en;
+    $('#bio-text').innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+  }
 
-function setLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang === 'zh_CN' ? 'zh-CN' : 'en';
-  zhBtn.classList.toggle('active', lang === 'zh_CN');
-  enBtn.classList.toggle('active', lang === 'en');
-  selectedSection = 'all';
-  syncStaticText();
-  buildSummary();
-  buildChips();
-  buildPages();
-}
+  /* ─── Education ─── */
+  function renderEducation() {
+    const el = $('#edu-list');
+    el.innerHTML = P.education.map(e => `
+      <div class="relative">
+        <span class="timeline-dot"></span>
+        <p class="font-medium text-slate-800 text-sm">${e[k('school')]}</p>
+        <p class="text-xs text-slate-500">${e[k('major')]} · ${e[k('degree')]}</p>
+      </div>
+    `).join('');
+  }
 
-async function init() {
-  const resp = await fetch('data/site-data.json');
-  dataStore = await resp.json();
+  /* ─── News ─── */
+  function renderNews() {
+    const el = $('#news-list');
+    el.innerHTML = P.news.map(n => `
+      <div class="flex gap-3 items-start">
+        <span class="shrink-0 text-xs font-mono text-brand-600 bg-brand-50 rounded-md px-2 py-0.5 mt-0.5">${n.date}</span>
+        <p class="text-sm text-slate-600">${n[k('content')]}</p>
+      </div>
+    `).join('');
+  }
 
-  const meta = document.getElementById('meta-line');
-  meta.textContent = `Generated: ${dataStore.generatedAt} | Source: ${dataStore.source}`;
+  /* ─── Research Areas ─── */
+  function renderResearchAreas() {
+    const el = $('#research-areas');
+    el.innerHTML = P.researchAreas.map(r => `
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+        <img src="${r.image}" alt="" class="w-full h-40 object-cover" loading="lazy" />
+        <div class="p-4">
+          <h4 class="font-semibold text-sm text-slate-800">${r[k('title')]}</h4>
+          <p class="text-xs text-slate-500 mt-1">${r[k('desc')]}</p>
+        </div>
+      </div>
+    `).join('');
+  }
 
-  zhBtn.addEventListener('click', () => setLang('zh_CN'));
-  enBtn.addEventListener('click', () => setLang('en'));
-  setLang('zh_CN');
-}
+  /* ─── Projects ─── */
+  function renderProjects() {
+    const el = $('#projects-list');
+    el.innerHTML = P.projects.map((p, i) => `
+      <div class="flex gap-3 items-start text-sm">
+        <span class="shrink-0 w-6 h-6 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-xs font-semibold mt-0.5">${i + 1}</span>
+        <div>
+          <p class="text-slate-700">${p[k('name')]}</p>
+          <p class="text-xs text-slate-400 mt-0.5">
+            ${p.id ? p.id + ' · ' : ''}${p.funding} · ${p[k('role')]}${p.period ? ' · ' + p.period : ''}
+          </p>
+        </div>
+      </div>
+    `).join('');
+  }
 
-init().catch((error) => {
-  pagesContainer.innerHTML = `<p>Load failed: ${error.message}</p>`;
-});
+  /* ─── Patents ─── */
+  function renderPatents() {
+    const el = $('#patents-list');
+    el.innerHTML = P.patents.map(p => `
+      <div class="text-sm flex gap-2 items-start">
+        <span class="shrink-0 mt-1">
+          ${p.status === 'granted'
+            ? '<svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            : '<svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'}
+        </span>
+        <div>
+          <p class="text-slate-700">${p.title}</p>
+          <p class="text-xs text-slate-400">${p.inventors} · ${p.number}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ─── Publications ─── */
+  let currentFilter = 'all';
+
+  function renderPublications(filter) {
+    if (filter) currentFilter = filter;
+    const list = P.publications.filter(
+      p => currentFilter === 'all' || p.type === currentFilter
+    );
+
+    // Group by year
+    const grouped = {};
+    list.forEach(p => {
+      (grouped[p.year] = grouped[p.year] || []).push(p);
+    });
+
+    const years = Object.keys(grouped).sort((a, b) => b - a);
+
+    const el = $('#pub-list');
+    el.innerHTML = years.map(year => `
+      <div>
+        <h4 class="text-base font-bold text-brand-600 mb-3 sticky top-0 bg-slate-50 py-1 z-10">${year}</h4>
+        <div class="space-y-3">
+          ${grouped[year].map((p, i) => {
+            const doiLink = p.doi
+              ? ` <a href="https://doi.org/${p.doi}" target="_blank" rel="noopener" class="text-brand-500 hover:underline">[DOI]</a>`
+              : '';
+            const badges = (p.tags || []).map(t => {
+              const color = t.startsWith('JCR Q1') ? 'bg-emerald-100 text-emerald-700'
+                : t.startsWith('JCR Q2') ? 'bg-blue-100 text-blue-700'
+                : t.startsWith('JCR Q3') ? 'bg-amber-100 text-amber-700'
+                : t === 'EI' ? 'bg-purple-100 text-purple-700'
+                : t.startsWith('IF') ? 'bg-slate-100 text-slate-600'
+                : 'bg-slate-100 text-slate-600';
+              return `<span class="badge ${color}">${t}</span>`;
+            }).join(' ');
+
+            return `
+              <div class="pub-item text-sm leading-relaxed">
+                <p class="text-slate-600">
+                  ${p.authors}. "${p.title}."
+                  <em class="text-slate-800">${p.journal}</em>${p.volume ? ', ' + p.volume : ''}${p.pages ? ': ' + p.pages : ''}, ${p.year}.${doiLink}
+                </p>
+                ${badges ? `<div class="mt-1 flex flex-wrap gap-1">${badges}</div>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    // Update count
+    const countLabel = lang === 'zh' ? `共 ${list.length} 篇` : `${list.length} papers`;
+    $('#pub-count').textContent = countLabel;
+
+    // Update filter button labels
+    $$('.pub-filter').forEach(btn => {
+      const txt = btn.getAttribute(lang === 'zh' ? 'data-zh' : 'data-en');
+      if (txt) btn.textContent = txt;
+    });
+  }
+
+  /* ─── Teaching ─── */
+  function renderTeaching() {
+    const el = $('#teaching-tbody');
+    el.innerHTML = P.teaching.map(c => `
+      <tr class="hover:bg-slate-50 transition-colors">
+        <td class="px-6 py-3 font-medium text-slate-700">${c[k('course')]}</td>
+        <td class="px-6 py-3 text-slate-500">${c[k('semester')]}</td>
+        <td class="px-6 py-3 text-center text-slate-500">${c.hours}</td>
+        <td class="px-6 py-3 text-center text-slate-500">${c.credits}</td>
+      </tr>
+    `).join('');
+  }
+
+  /* ─── Recruitment ─── */
+  function renderRecruitment() {
+    const paras = lang === 'zh' ? P.recruitment.zh : P.recruitment.en;
+    $('#recruit-text').innerHTML = paras.map((p, i) => {
+      if (i === 0) return `<p class="font-semibold text-brand-600 text-base">${p}</p>`;
+      if (i === paras.length - 1) return `<p class="font-semibold text-brand-600 bg-brand-50 rounded-lg p-3">${p}</p>`;
+      return `<p>${p}</p>`;
+    }).join('');
+  }
+
+  /* ─── Lab Gallery ─── */
+  function renderLab() {
+    const el = $('#lab-gallery');
+    el.innerHTML = P.labImages.map(img => `
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+        <img src="${img.src}" alt="${img[k('caption')]}" class="w-full h-48 object-cover" loading="lazy" />
+        <p class="text-xs text-slate-500 text-center py-2">${img[k('caption')]}</p>
+      </div>
+    `).join('');
+  }
+
+  /* ─── Mobile Menu ─── */
+  function setupMobileMenu() {
+    const hamburger = $('#hamburger');
+    const sidebar = $('#sidebar');
+    const overlay = $('#overlay');
+
+    function toggleMenu() {
+      const open = sidebar.classList.toggle('-translate-x-full');
+      sidebar.classList.toggle('translate-x-0');
+      hamburger.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+
+    // Close menu when nav link clicked (mobile)
+    $$('.nav-link', sidebar).forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) toggleMenu();
+      });
+    });
+  }
+
+  /* ─── Scroll Spy (IntersectionObserver) ─── */
+  function setupScrollSpy() {
+    const sections = $$('section[id]');
+    const links = $$('.nav-link');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const active = $(`a[href="#${entry.target.id}"]`, $('#sidebar-nav'));
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  }
+
+  /* ─── Scroll-to-top Button ─── */
+  function setupScrollTop() {
+    const btn = $('#scrollTop');
+    window.addEventListener('scroll', () => {
+      const show = window.scrollY > 400;
+      btn.classList.toggle('opacity-0', !show);
+      btn.classList.toggle('pointer-events-none', !show);
+    });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ─── Publication Filter ─── */
+  function setupPubFilter() {
+    $$('.pub-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('.pub-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderPublications(btn.dataset.filter);
+      });
+    });
+  }
+
+  /* ─── Language Button Wiring ─── */
+  function setupLangButtons() {
+    $$('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+  }
+
+  /* ─── Init ─── */
+  function init() {
+    setupMobileMenu();
+    setupLangButtons();
+    setupScrollSpy();
+    setupScrollTop();
+    setupPubFilter();
+    setLang(lang);   // Initial render
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
