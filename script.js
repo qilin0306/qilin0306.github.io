@@ -1,8 +1,9 @@
 /**
  * script.js — Rendering logic for Lin Qi's academic homepage.
  * Reads data from window.PROFILE (loaded via data.js).
- * Supports CN/EN bilingual toggle, mobile menu, scroll spy,
- * publication filter, and dynamic section rendering.
+ * Supports CN/EN bilingual toggle, top navigation bar,
+ * mobile dropdown menu, scroll spy, publication filter,
+ * teacher gallery, and dynamic section rendering.
  */
 
 (function () {
@@ -28,14 +29,11 @@
     });
 
     // Highlight active lang button
-    $$('.lang-btn').forEach(btn => {
-      const isActive = btn.dataset.lang === l;
-      btn.classList.toggle('bg-white/20', isActive);
-      btn.classList.toggle('bg-white/10', !isActive);
+    $$('.lang-toggle').forEach(btn => {
+      btn.classList.toggle('active-lang', btn.dataset.lang === l);
     });
 
     // Re-render data-driven sections
-    renderSidebar();
     renderHero();
     renderBio();
     renderEducation();
@@ -47,14 +45,7 @@
     renderTeaching();
     renderRecruitment();
     renderLab();
-  }
-
-  /* ─── Sidebar info ─── */
-  function renderSidebar() {
-    $('#sidebar-name').textContent = P.personalInfo[k('name')];
-    $('#sidebar-title').textContent = P.personalInfo[k('title')];
-    $('#sidebar-dept').innerHTML = P.personalInfo[k('dept')].replace(/, /g, '<br/>').replace('，', '<br/>');
-    $('#sidebar-addr').textContent = lang === 'zh' ? '东北大学浑南校区 生科楼' : 'MBIE, NEU, Shenyang';
+    renderTeacherGallery();
   }
 
   /* ─── Hero ─── */
@@ -161,9 +152,9 @@
     const el = $('#pub-list');
     el.innerHTML = years.map(year => `
       <div>
-        <h4 class="text-base font-bold text-brand-600 mb-3 sticky top-0 bg-slate-50 py-1 z-10">${year}</h4>
+        <h4 class="text-base font-bold text-brand-600 mb-3 sticky top-16 bg-slate-50 py-1 z-10">${year}</h4>
         <div class="space-y-3">
-          ${grouped[year].map((p, i) => {
+          ${grouped[year].map(p => {
             const doiLink = p.doi
               ? ` <a href="https://doi.org/${p.doi}" target="_blank" rel="noopener" class="text-brand-500 hover:underline">[DOI]</a>`
               : '';
@@ -236,40 +227,51 @@
     `).join('');
   }
 
+  /* ─── Teacher Gallery ─── */
+  function renderTeacherGallery() {
+    const el = $('#teacher-gallery');
+    if (!P.teacherGallery || P.teacherGallery.length === 0) {
+      el.innerHTML = `<p class="text-sm text-slate-400 col-span-full">${lang === 'zh' ? '暂无内容' : 'No content yet'}</p>`;
+      return;
+    }
+    el.innerHTML = P.teacherGallery.map(img => `
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+        <img src="${img.src}" alt="${img[k('caption')]}" class="w-full h-48 object-cover" loading="lazy" />
+        <div class="p-3">
+          <p class="text-sm font-medium text-slate-700">${img[k('caption')]}</p>
+          ${img[k('desc')] ? `<p class="text-xs text-slate-400 mt-1">${img[k('desc')]}</p>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
   /* ─── Mobile Menu ─── */
   function setupMobileMenu() {
     const hamburger = $('#hamburger');
-    const sidebar = $('#sidebar');
-    const overlay = $('#overlay');
+    const dropdown = $('#mobile-dropdown');
 
-    function toggleMenu() {
-      const open = sidebar.classList.toggle('-translate-x-full');
-      sidebar.classList.toggle('translate-x-0');
-      hamburger.classList.toggle('open');
-      overlay.classList.toggle('hidden');
-    }
+    hamburger.addEventListener('click', () => {
+      dropdown.classList.toggle('open');
+    });
 
-    hamburger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-
-    // Close menu when nav link clicked (mobile)
-    $$('.nav-link', sidebar).forEach(link => {
+    // Close menu when a link is clicked
+    $$('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', () => {
-        if (window.innerWidth < 768) toggleMenu();
+        dropdown.classList.remove('open');
       });
     });
   }
 
-  /* ─── Scroll Spy (IntersectionObserver) ─── */
+  /* ─── Scroll Spy (IntersectionObserver) for Top Nav ─── */
   function setupScrollSpy() {
     const sections = $$('section[id]');
-    const links = $$('.nav-link');
+    const desktopLinks = $$('.nav-link-top');
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove('active'));
-          const active = $(`a[href="#${entry.target.id}"]`, $('#sidebar-nav'));
+          desktopLinks.forEach(l => l.classList.remove('active'));
+          const active = $(`a.nav-link-top[href="#${entry.target.id}"]`);
           if (active) active.classList.add('active');
         }
       });
@@ -304,7 +306,7 @@
 
   /* ─── Language Button Wiring ─── */
   function setupLangButtons() {
-    $$('.lang-btn').forEach(btn => {
+    $$('.lang-toggle').forEach(btn => {
       btn.addEventListener('click', () => setLang(btn.dataset.lang));
     });
   }

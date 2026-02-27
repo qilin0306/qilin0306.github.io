@@ -1,0 +1,20 @@
+C:\Users\Administrator\.gemini\antigravity\brain\1aab19c0-5a31-4698-a4f4-669c00e6c921\walkthrough.md.resolved
+
+从http://faculty.neu.edu.cn/qilin/zh_CN/index.htm，抓取数据(中文/英文)，包括文字、图片、表格。
+在./Homepage-QL目录下构建基于github的个人主页，推送到https://github.com/qilin03-lab/qilin.github.io,通过qilin.github.io打开个人主页。
+
+
+分析个人主页：http://faculty.neu.edu.cn/qilin/zh_CN/index.htm的各个栏目，抓取整个个人主页的各个栏目的信息(中文/英文)，包括文字、图片、表格，转化为基于github的个人主页，推送到https://github.com/qilin03-lab/qilin.github.io,可以通过qilin.github.io来访问个人主页。
+
+
+1.总结这个个人主页的内容和结构：http://faculty.neu.edu.cn/qilin/zh_CN/index.htm。请提取这个网页中的所有信息，包括：个人简介、研究方向、发表论文列表、教学情况。将它们转换成结构清晰的 JSON 或 Markdown 格式。我要把这个个人网页迁移到github网站上
+
+2.模仿https://github.com/malianbo/malianbo.github.io的风格，帮我用 HTML + Tailwind CSS 创建一个简约风格的单页面个人主页模板。要求：上边栏导航、响应式设计、包含我在第一步提取的所有栏目（首页、科研、论文、教学）。
+
+3. 我想使用IDE自带的版本控制工具或者Git工具，当本地网页更新后，可以推送到 main 分支时，自动将这个静态 HTML 项目部署到 GitHub Pages：https://github.com/qilin03-lab/qilin.github.io, 其他人可以通过qilin.github.io来访问个人主页。
+
+4. 便于后续在本地进行个人主页更新，告诉我如何方便进行个人主页内容更新！
+
+
+参考：
+https://github.com/malianbo/malianbo.github.io
