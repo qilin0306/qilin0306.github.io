@@ -93,7 +93,9 @@
         
         document.getElementById('research-areas').innerHTML = P.researchAreas.map(r => `
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-                <img src="${r.image}" alt="${r.title_zh}" class="w-full h-48 object-cover">
+                <div class="w-full h-56 bg-gray-100 flex items-center justify-center">
+                    <img src="${r.image}" alt="${r.title_zh}" class="max-w-full max-h-full object-contain">
+                </div>
                 <div class="p-4">
                     <h3 class="font-semibold text-gray-800">${r.title_zh}</h3>
                     <p class="text-sm text-gray-500 mt-1">${r.desc_zh}</p>

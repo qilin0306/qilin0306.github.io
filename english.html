@@ -113,9 +113,13 @@
         `).join('');
         
         document.getElementById('research-areas').innerHTML = P.researchAreas.map(r => `
-            <div class="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition">
-                <h3 class="font-semibold text-gray-800">${r.title_en}</h3>
-                <p class="text-sm text-gray-500 mt-1">${r.desc_en}</p>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <div class="w-full h-40 bg-gray-100 flex items-center justify-center">
+                    <img src="${r.image}" alt="${r.title_en}" class="max-w-full max-h-full object-contain">
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-gray-800 text-sm">${r.title_en}</h3>
+                </div>
             </div>
         `).join('');
         

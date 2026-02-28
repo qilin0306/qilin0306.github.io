@@ -557,21 +557,21 @@ window.PROFILE = {
   /* ───────────── Teacher Gallery (教师风采) ───────────── */
   teacherGallery: [
     {
-      src: "assets/mirror/img_0018.jpg",
-      caption_zh: "在EMBC学术交流",
+      src: "assets/mirror/img_0019.jpg",
+      caption_zh: "EMBC学术交流",
       caption_en: "Academic Exchange at EMBC",
       desc_zh: "参加国际生物医学工程会议（EMBC）学术交流",
       desc_en: "Attending the International Conference on Engineering in Medicine and Biology (EMBC)"
     },
     {
-      src: "assets/mirror/img_0019.jpg",
+      src: "assets/mirror/img_0020.jpg",
       caption_zh: "MIT学术交流",
       caption_en: "Academic Visit to MIT",
       desc_zh: "赴美国麻省理工学院（MIT）进行学术交流访问",
       desc_en: "Academic visit to the Massachusetts Institute of Technology (MIT)"
     },
     {
-      src: "assets/mirror/img_0020.jpg",
+      src: "assets/mirror/img_0021.jpg",
       caption_zh: "哈佛医学院交流",
       caption_en: "Visit to Harvard Medical School",
       desc_zh: "赴哈佛医学院进行学术交流访问",
