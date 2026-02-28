@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科学研究 - 齐林 | 东北大学</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', 'Inter', sans-serif; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #2563eb; transition: width 0.3s ease; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-xl font-bold text-blue-700">齐林</span>
+                    <span class="text-gray-400 text-sm hidden sm:inline">| Lin Qi</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="nav-link text-gray-600 hover:text-blue-600">首页</a>
+                    <a href="research.html" class="nav-link text-blue-600 font-medium">科研</a>
+                    <a href="publications.html" class="nav-link text-gray-600 hover:text-blue-600">论文</a>
+                    <a href="teaching.html" class="nav-link text-gray-600 hover:text-blue-600">教学</a>
+                    <a href="enrollment.html" class="nav-link text-gray-600 hover:text-blue-600">招生</a>
+                    <a href="lab.html" class="nav-link text-gray-600 hover:text-blue-600">实验室</a>
+                    <a href="english.html" class="text-gray-500 hover:text-blue-600"><i class="fas fa-globe mr-1"></i>EN</a>
+                </div>
+                <button id="menu-btn" class="md:hidden text-gray-600 p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="index.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">首页</a>
+            <a href="research.html" class="block px-4 py-3 text-blue-600 font-medium border-b">科研</a>
+            <a href="publications.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">论文</a>
+            <a href="teaching.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">教学</a>
+            <a href="enrollment.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">招生</a>
+            <a href="lab.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50">实验室</a>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 pt-24 pb-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">科学研究</h1>
+            <p class="text-blue-200 mt-2">Research</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-microscope text-blue-600 mr-3"></i>研究方向</h2>
+            <div id="research-areas" class="grid md:grid-cols-2 gap-4"></div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-project-diagram text-blue-600 mr-3"></i>科研项目</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">项目名称</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">类型</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">经费</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">角色</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">年份</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-handshake text-blue-600 mr-3"></i>合作单位</h2>
+            <div id="collaborations" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 齐林. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        const P = window.PROFILE;
+        
+        document.getElementById('research-areas').innerHTML = P.researchAreas.map(r => `
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <img src="${r.image}" alt="${r.title_zh}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-800">${r.title_zh}</h3>
+                    <p class="text-sm text-gray-500 mt-1">${r.desc_zh}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        document.getElementById('projects').innerHTML = P.projects.map(p => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 text-gray-800">${p.name_zh}</td>
+                <td class="px-4 py-3 text-gray-600">${p.name_zh.includes('国家') ? '国家级' : p.name_zh.includes('辽宁') ? '省级' : '其他'}</td>
+                <td class="px-4 py-3 text-gray-600">${p.funding}</td>
+                <td class="px-4 py-3 text-blue-600 font-medium">${p.role_zh}</td>
+                <td class="px-4 py-3 text-gray-600">${p.period || '-'}</td>
+            </tr>
+        `).join('');
+        
+        const collabs = ['中科院深圳先进技术研究院', '中国医科大学', '中山大学', '哈工大(深圳)', '南方科技大学', '香港中文大学'];
+        document.getElementById('collaborations').innerHTML = collabs.map(c => `
+            <div class="text-center p-3 bg-white rounded-lg shadow-sm">
+                <i class="fas fa-university text-blue-600 mb-1"></i>
+                <p class="text-xs text-gray-600">${c}</p>
+            </div>
+        `).join('');
+        
+        document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+    </script>
+</body>
+</html>

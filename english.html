@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lin Qi | Northeastern University</title>
+    <meta name="description" content="Lin Qi, Associate Professor at College of Medicine and Biological Information Engineering, Northeastern University">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #2563eb; transition: width 0.3s ease; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .hero-bg { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="english.html" class="flex items-center gap-2">
+                    <span class="text-xl font-bold text-blue-700">Lin Qi</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="english.html" class="nav-link text-blue-600 font-medium">Home</a>
+                    <a href="research_en.html" class="nav-link text-gray-600 hover:text-blue-600">Research</a>
+                    <a href="publications_en.html" class="nav-link text-gray-600 hover:text-blue-600">Publications</a>
+                    <a href="teaching_en.html" class="nav-link text-gray-600 hover:text-blue-600">Teaching</a>
+                    <a href="enrollment_en.html" class="nav-link text-gray-600 hover:text-blue-600">Join Us</a>
+                    <a href="lab_en.html" class="nav-link text-gray-600 hover:text-blue-600">Lab</a>
+                    <a href="index.html" class="text-gray-500 hover:text-blue-600"><i class="fas fa-globe mr-1"></i>中文</a>
+                </div>
+                <button id="menu-btn" class="md:hidden text-gray-600 p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="english.html" class="block px-4 py-3 text-blue-600 font-medium border-b">Home</a>
+            <a href="research_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Research</a>
+            <a href="publications_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Publications</a>
+            <a href="teaching_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Teaching</a>
+            <a href="enrollment_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Join Us</a>
+            <a href="lab_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50">Lab</a>
+        </div>
+    </nav>
+
+    <header class="hero-bg pt-24 pb-16 md:pt-32 md:pb-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <img id="avatar" src="assets/images/profile.png" alt="Lin Qi" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg object-cover">
+                <div class="text-white text-center md:text-left">
+                    <h1 class="text-3xl md:text-4xl font-bold" id="name">Lin Qi</h1>
+                    <p class="text-lg text-blue-200 mt-2" id="title">Associate Professor | PhD Supervisor</p>
+                    <p class="text-blue-100 mt-1" id="dept">College of Medicine and Biological Information Engineering<br>Northeastern University</p>
+                    <a id="email-link" href="mailto:qilin@bmie.neu.edu.cn" class="inline-block mt-4 bg-white/20 px-4 py-2 rounded-full text-sm hover:bg-white/30 transition">
+                        <i class="fas fa-envelope mr-2"></i><span id="email">qilin@bmie.neu.edu.cn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid gap-6">
+            <section class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-user text-blue-600 mr-3"></i>Biography</h2>
+                <div id="bio" class="text-gray-600 leading-relaxed space-y-3"></div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-graduation-cap text-blue-600 mr-3"></i>Education</h2>
+                <div id="education" class="space-y-3"></div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-microscope text-blue-600 mr-3"></i>Research Interests</h2>
+                <div id="research-areas" class="grid md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-newspaper text-blue-600 mr-3"></i>News & Updates</h2>
+                <div id="news" class="space-y-3 max-h-80 overflow-y-auto"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Lin Qi · Northeastern University</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        const P = window.PROFILE;
+        
+        document.getElementById('avatar').src = P.personalInfo.avatar;
+        document.getElementById('name').textContent = P.personalInfo.name_en;
+        document.getElementById('title').textContent = P.personalInfo.title_en;
+        document.getElementById('dept').innerHTML = P.personalInfo.dept_en.replace(', ', '<br>');
+        document.getElementById('email').textContent = P.personalInfo.email;
+        document.getElementById('email-link').href = 'mailto:' + P.personalInfo.email;
+        
+        document.getElementById('bio').innerHTML = P.profile.en.map(p => `<p>${p}</p>`).join('');
+        
+        document.getElementById('education').innerHTML = P.education.map(e => `
+            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <i class="fas fa-university text-blue-600"></i>
+                <div><p class="font-medium text-gray-800">${e.school_en}</p><p class="text-sm text-gray-500">${e.major_en} · ${e.degree_en}</p></div>
+            </div>
+        `).join('');
+        
+        document.getElementById('research-areas').innerHTML = P.researchAreas.map(r => `
+            <div class="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition">
+                <h3 class="font-semibold text-gray-800">${r.title_en}</h3>
+                <p class="text-sm text-gray-500 mt-1">${r.desc_en}</p>
+            </div>
+        `).join('');
+        
+        document.getElementById('news').innerHTML = P.news.slice(0, 6).map(n => `
+            <div class="flex gap-3 items-start"><span class="text-blue-600 font-medium text-sm whitespace-nowrap">${n.date}</span><span class="text-gray-600">${n.content_en}</span></div>
+        `).join('');
+        
+        document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+    </script>
+</body>
+</html>

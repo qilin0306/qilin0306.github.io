@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching - Lin Qi | Northeastern University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #2563eb; transition: width 0.3s ease; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="english.html" class="flex items-center gap-2">
+                    <span class="text-xl font-bold text-blue-700">Lin Qi</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="english.html" class="nav-link text-gray-600 hover:text-blue-600">Home</a>
+                    <a href="research_en.html" class="nav-link text-gray-600 hover:text-blue-600">Research</a>
+                    <a href="publications_en.html" class="nav-link text-gray-600 hover:text-blue-600">Publications</a>
+                    <a href="teaching_en.html" class="nav-link text-blue-600 font-medium">Teaching</a>
+                    <a href="enrollment_en.html" class="nav-link text-gray-600 hover:text-blue-600">Join Us</a>
+                    <a href="lab_en.html" class="nav-link text-gray-600 hover:text-blue-600">Lab</a>
+                    <a href="index.html" class="text-gray-500 hover:text-blue-600"><i class="fas fa-globe mr-1"></i>中文</a>
+                </div>
+                <button id="menu-btn" class="md:hidden text-gray-600 p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="english.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Home</a>
+            <a href="research_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Research</a>
+            <a href="publications_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Publications</a>
+            <a href="teaching_en.html" class="block px-4 py-3 text-blue-600 font-medium border-b">Teaching</a>
+            <a href="enrollment_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">Join Us</a>
+            <a href="lab_en.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50">Lab</a>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-r from-green-700 to-green-900 pt-24 pb-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">Teaching</h1>
+            <p class="text-green-200 mt-2">Teaching & Student Mentorship</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-book text-green-600 mr-3"></i>Courses</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">Course</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">Semester</th>
+                            <th class="px-4 py-3 text-center font-medium text-gray-600">Hours</th>
+                            <th class="px-4 py-3 text-center font-medium text-gray-600">Credits</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teaching" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-trophy text-yellow-600 mr-3"></i>Student Awards</h2>
+            <div id="awards" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-user-graduate text-green-600 mr-3"></i>Alumni</h2>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">Name</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">Destination</th>
+                            <th class="px-4 py-3 text-left font-medium text-gray-600">Position/Degree</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alumni" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Lin Qi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        const P = window.PROFILE;
+        
+        document.getElementById('teaching').innerHTML = P.teaching.map(t => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium text-gray-800">${t.course_en}</td>
+                <td class="px-4 py-3 text-gray-600">${t.semester_en}</td>
+                <td class="px-4 py-3 text-center text-gray-600">${t.hours}</td>
+                <td class="px-4 py-3 text-center text-gray-600">${t.credits}</td>
+            </tr>
+        `).join('');
+        
+        document.getElementById('awards').innerHTML = P.awards.map(a => `
+            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-yellow-400">
+                <p class="font-medium text-gray-800">${a.title}</p>
+                <p class="text-sm text-gray-500">${a.student}</p>
+                <p class="text-xs text-gray-400 mt-1">${a.year}</p>
+            </div>
+        `).join('');
+        
+        document.getElementById('alumni').innerHTML = P.alumni.map(a => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium text-gray-800">${a.name}</td>
+                <td class="px-4 py-3 text-gray-600">${a.destination}</td>
+                <td class="px-4 py-3 text-blue-600">${a.position}</td>
+            </tr>
+        `).join('');
+        
+        document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+    </script>
+</body>
+</html>

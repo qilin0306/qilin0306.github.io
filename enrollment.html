@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招生信息 - 齐林 | 东北大学</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', 'Inter', sans-serif; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #2563eb; transition: width 0.3s ease; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-xl font-bold text-blue-700">齐林</span>
+                    <span class="text-gray-400 text-sm hidden sm:inline">| Lin Qi</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="nav-link text-gray-600 hover:text-blue-600">首页</a>
+                    <a href="research.html" class="nav-link text-gray-600 hover:text-blue-600">科研</a>
+                    <a href="publications.html" class="nav-link text-gray-600 hover:text-blue-600">论文</a>
+                    <a href="teaching.html" class="nav-link text-gray-600 hover:text-blue-600">教学</a>
+                    <a href="enrollment.html" class="nav-link text-blue-600 font-medium">招生</a>
+                    <a href="lab.html" class="nav-link text-gray-600 hover:text-blue-600">实验室</a>
+                    <a href="english.html" class="text-gray-500 hover:text-blue-600"><i class="fas fa-globe mr-1"></i>EN</a>
+                </div>
+                <button id="menu-btn" class="md:hidden text-gray-600 p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="index.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">首页</a>
+            <a href="research.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">科研</a>
+            <a href="publications.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">论文</a>
+            <a href="teaching.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 border-b">教学</a>
+            <a href="enrollment.html" class="block px-4 py-3 text-blue-600 font-medium border-b">招生</a>
+            <a href="lab.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-50">实验室</a>
+        </div>
+    </nav>
+
+    <div class="bg-gradient-to-r from-purple-700 to-indigo-800 pt-28 pb-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">招生啦！</h1>
+            <p class="text-purple-200 mt-2">欢迎加入我们的研究团队</p>
+            <div class="mt-6 inline-block bg-white text-purple-700 px-6 py-3 rounded-xl shadow-lg">
+                <p class="font-bold">招收博士、硕士研究生</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 -mt-8">
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-user-plus text-purple-600 mr-3"></i>招生信息</h2>
+            <div id="recruitment" class="text-gray-600 space-y-3 leading-relaxed"></div>
+            
+            <div class="mt-6 grid md:grid-cols-3 gap-4">
+                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                    <i class="fas fa-user-graduate text-3xl text-purple-600 mb-2"></i>
+                    <p class="font-medium">博士研究生</p>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                    <i class="fas fa-graduation-cap text-3xl text-blue-600 mb-2"></i>
+                    <p class="font-medium">学术硕士</p>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-lg">
+                    <i class="fas fa-laptop-code text-3xl text-green-600 mb-2"></i>
+                    <p class="font-medium">专业硕士</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-check-circle text-green-600 mr-3"></i>我们期待</h2>
+            <div class="grid md:grid-cols-3 gap-3">
+                <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                    <i class="fas fa-brain text-blue-600"></i>
+                    <span>对科研有浓厚兴趣</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                    <i class="fas fa-calculator text-blue-600"></i>
+                    <span>具有扎实的数学基础</span>
+                </div>
+                <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                    <i class="fas fa-code text-blue-600"></i>
+                    <span>具有编程能力</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-envelope text-blue-600 mr-3"></i>联系方式</h2>
+            <div class="text-center">
+                <p class="text-lg text-gray-700">电邮：qilin@bmie.neu.edu.cn</p>
+                <p class="text-gray-500 mt-2">欢迎感兴趣的同学邮件联系！</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 齐林. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        const P = window.PROFILE;
+        
+        document.getElementById('recruitment').innerHTML = P.recruitment.zh.map(p => `<p>${p}</p>`).join('');
+        
+        document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+    </script>
+</body>
+</html>

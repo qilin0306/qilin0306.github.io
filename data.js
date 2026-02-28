@@ -94,11 +94,11 @@ window.PROFILE = {
   /* ───────────── News / Updates ───────────── */
   news: [
     { date: "2026.02", content_zh: "课题组论文被国际计算机视觉领域顶级会议 CVPR 2026（CCF-A）接受，祝贺宇龙同学！", content_en: "Paper accepted by CVPR 2026 (CCF-A). Congratulations to Yulong!" },
-    { date: "2025.12", content_zh: "祝贺子怡同学荣获2025年度"东北大学优秀研究生"", content_en: "Congratulations to Ziyi for receiving the NEU Outstanding Graduate Student Award 2025." },
-    { date: "2025.12", content_zh: "祝贺佳朋同学荣获"东北大学优秀硕士毕业论文"", content_en: "Congratulations to Jiapeng for winning the NEU Outstanding Master's Thesis Award." },
+    { date: "2025.12", content_zh: "祝贺子怡同学荣获2025年度「东北大学优秀研究生」", content_en: "Congratulations to Ziyi for receiving the NEU Outstanding Graduate Student Award 2025." },
+    { date: "2025.12", content_zh: "祝贺佳朋同学荣获「东北大学优秀硕士毕业论文」", content_en: "Congratulations to Jiapeng for winning the NEU Outstanding Master's Thesis Award." },
     { date: "2025.11", content_zh: "祝贺宇龙同学荣获2025年度研究生国家奖学金", content_en: "Congratulations to Yulong for receiving the National Graduate Scholarship 2025." },
     { date: "2025.09", content_zh: "祝贺王焯同学获得全美知名UA大学CSE全额奖学金赴美攻读博士学位", content_en: "Congratulations to Wang Zhuo for receiving a full CSE Ph.D. scholarship at the University of Arizona." },
-    { date: "2025.07", content_zh: "祝贺子怡和宇龙同学于2025年"第十届全国大学生生物医学工程创新设计竞赛"中荣获全国一等奖！", content_en: "Congratulations to Ziyi and Yulong for winning the National First Prize at the 10th National BME Innovation Design Competition!" },
+    { date: "2025.07", content_zh: "祝贺子怡和宇龙同学于2025年「第十届全国大学生生物医学工程创新设计竞赛」中荣获全国一等奖！", content_en: "Congratulations to Ziyi and Yulong for winning the National First Prize at the 10th National BME Innovation Design Competition!" },
     { date: "2025.06", content_zh: "恭喜佳朋、奕谋、铭骏、周杰、舒月、奕嘉同学顺利毕业，分别入职/升学至河北医科大学、中芯国际、中国科技大学、北京医智影、辽宁省公务员、上海交通大学等。", content_en: "Congratulations to Jiapeng, Yimou, Mingjun, Jie Zhou, Shuyue, and Yijia on their graduation and placement at top institutions and companies." }
   ],
 
@@ -508,7 +508,7 @@ window.PROFILE = {
   /* ───────────── Research Projects ───────────── */
   projects: [
     { name_zh: "辽宁省重点研发项目：面向监所讯问过程的智能监测预警关键技术研发与示范", name_en: "Liaoning Key R&D: Intelligent Monitoring and Early Warning for Interrogation Processes", id: "2024JH2/102500076", funding: "30万", role_zh: "主持人", role_en: "PI", period: "2024-" },
-    { name_zh: "辽宁省沈阳市"揭榜挂帅"项目：人工智能类脑情感识别分析技术研究", name_en: "Shenyang 'Open Competition': AI Brain-inspired Emotion Recognition", id: "21-104-1-24", funding: "158万", role_zh: "主要参与人", role_en: "Co-PI", period: "2021-" },
+    { name_zh: "辽宁省沈阳市「揭榜挂帅」项目：人工智能类脑情感识别分析技术研究", name_en: "Shenyang 'Open Competition': AI Brain-inspired Emotion Recognition", id: "21-104-1-24", funding: "158万", role_zh: "主要参与人", role_en: "Co-PI", period: "2021-" },
     { name_zh: "辽宁省自然科学基金计划面上项目：基于多模态生理信号分析与建模的EECP治疗糖尿病足的疗效研究", name_en: "NSFC Liaoning: EECP Treatment for Diabetic Foot via Multimodal Physiological Modeling", id: "2021-MS-087", funding: "5万", role_zh: "主持人", role_en: "PI", period: "2021-2023" },
     { name_zh: "国家重点研发计划项目：基于体外反搏技术平台的循环系统智能化康复辅具研发", name_en: "National Key R&D: Intelligent Circulation Rehabilitation Platform Based on EECP", id: "2020YFC2004400", funding: "521万", role_zh: "子课题负责人", role_en: "Co-PI", period: "2020-2023" },
     { name_zh: "国家卫生健康委员会辅助循环重点实验室开放性课题：基于外周生理多尺度建模分析的体外反搏治疗糖尿病足疗效研究", name_en: "NHC Key Lab Open Grant: EECP Treatment for Diabetic Foot via Peripheral Modeling", id: "cvclab201901", funding: "6万", role_zh: "主持人", role_en: "PI", period: "2020-2021" },
@@ -532,7 +532,7 @@ window.PROFILE = {
   recruitment: {
     zh: [
       "招收研究生（学硕/专硕/博士）",
-      "课题组注重培养学生的科研能力及综合素质，全过程鼓励和促进学生的全面成长。课题组已形成良好的科研氛围并提供先进的实验环境，鼓励学生发表高水平论文及其他科研成果。指导的研究生获得"东北大学优秀硕士学位论文"、指导留学生获得"东北大学外国留学生成绩优秀奖"，指导研究生毕业后多到国内外知名医疗企业和互联网企业工作。",
+      "课题组注重培养学生的科研能力及综合素质，全过程鼓励和促进学生的全面成长。课题组已形成良好的科研氛围并提供先进的实验环境，鼓励学生发表高水平论文及其他科研成果。指导的研究生获得「东北大学优秀硕士学位论文」、指导留学生获得「东北大学外国留学生成绩优秀奖」，指导研究生毕业后多到国内外知名医疗企业和互联网企业工作。",
       "课题组与中国科学院深圳先进技术研究院、中国医科大学、中山大学、哈尔滨工业大学、山东大学、香港中文大学有着深入的科研合作与联合人才培养，已推荐多名优秀毕业生到国内外知名高校继续深造。",
       "现招收2026级博士、硕士研究生，欢迎感兴趣的同学邮件联系！"
     ],
